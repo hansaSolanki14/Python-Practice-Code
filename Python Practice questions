@@ -1,0 +1,397 @@
+# Loops & Control Flow
+
+# 1. Print all numbers between 1 and 500 divisible by 3 and sum of digits > 10
+for i in range(1, 501):
+    if i % 3 == 0:   
+        if sum(int(d) for d in str(i)) > 10:   
+            print(i, end=" ")
+
+# 2. Find all Armstrong numbers between 1 and 10,000
+for num in range(1, 10001):
+    power = len(str(num))   
+    if num == sum(int(d)**power for d in str(num)):   
+        print(num, end=" ")
+
+# 3. Print all prime numbers between 1 and N, skip numbers ending with 3
+N = 100
+for num in range(2, N+1):
+    if str(num).endswith("3"):   
+        continue   
+    for i in range(2, int(num**0.5)+1):   
+        if num % i == 0:   
+            break   
+    else:   
+        print(num, end=" ")
+
+# 4. Reverse a number without slicing using while loop
+num = 12345
+rev = 0
+while num > 0:
+    rev = rev*10 + num%10   
+    num //= 10
+print(rev)
+
+# 5. Print first N Fibonacci numbers using loops
+N = 10
+a, b = 0, 1
+for _ in range(N):
+    print(a, end=" ")   
+    a, b = b, a+b
+
+
+# Pattern Making
+
+# 1. Pyramid Pattern (N=5)
+N = 5
+for i in range(1, N+1):
+    spaces = " " * (N-i)   
+    num_list = list(range(i, 2*i))   
+    num_list += list(range(2*i-2, i-1, -1))   
+    print(spaces + "".join(str(x) for x in num_list))
+
+# 2. Spiral Matrix NxN
+N = 3
+matrix = [[0]*N for _ in range(N)]
+top, left, right, bottom = 0, 0, N-1, N-1
+num = 1
+while left <= right and top <= bottom:
+    for i in range(left, right+1): matrix[top][i] = num; num += 1   
+    top += 1   
+    for i in range(top, bottom+1): matrix[i][right] = num; num += 1   
+    right -= 1   
+    for i in range(right, left-1, -1): matrix[bottom][i] = num; num += 1   
+    bottom -= 1   
+    for i in range(bottom, top-1, -1): matrix[i][left] = num; num += 1   
+    left += 1
+for row in matrix: print(row)
+
+# 3. Diamond Pattern (*)
+N = 5
+for i in range(1, N+1, 2):
+    print(" " * ((N-i)//2) + "*"*i)
+for i in range(N-2, 0, -2):
+    print(" " * ((N-i)//2) + "*"*i)
+
+# 4. Pascal’s Triangle
+from math import comb
+N = 5
+for i in range(N):
+    print(" "*(N-i), end="")   
+    for j in range(i+1):   
+        print(comb(i,j), end=" ")   
+    print()
+
+# 5. Alphabet Triangle
+N = 4
+for i in range(1, N+1):
+    print("".join(chr(65+j) for j in range(i)))
+
+
+# If-Logic & Match-Case
+
+# 1. Take marks and print Grade
+marks = int(input("Enter marks: "))
+match marks:
+    case m if m >= 90: print("Grade A")   
+    case m if m >= 75: print("Grade B")   
+    case m if m >= 60: print("Grade C")   
+    case m if m >= 40: print("Grade D")   
+    case _: print("Grade F")
+
+# 2. FizzBuzz (5 → Fizz, 7 → Buzz, both → FizzBuzz)
+for i in range(1, 51):
+    if i % 5 == 0 and i % 7 == 0:   
+        print("FizzBuzz")   
+    elif i % 5 == 0:   
+        print("Fizz")   
+    elif i % 7 == 0:   
+        print("Buzz")   
+    else:   
+        print(i)
+
+# 3. Calculator using match-case
+a = int(input("Enter first number: "))
+b = int(input("Enter second number: "))
+op = input("Enter operator (+,-,*,/): ")
+match op:
+    case "+": print(a+b)   
+    case "-": print(a-b)   
+    case "*": print(a*b)   
+    case "/": print(a/b if b != 0 else "Error: Divide by zero")   
+    case _: print("Invalid operator")
+
+# 4. Leap year check
+year = int(input("Enter year: "))
+if (year % 400 == 0) or (year % 4 == 0 and year % 100 != 0):
+    print("Leap Year")
+else:
+    print("Not Leap Year")
+
+# 5. Identify character type
+ch = input("Enter a character: ")
+if ch.isalpha():
+    if ch.lower() in "aeiou":   
+        print("Vowel")   
+    else:   
+        print("Consonant")
+elif ch.isdigit():
+    print("Digit")
+else:
+    print("Special Character")
+
+
+# Functions
+
+# 1. GCD & LCM
+def gcd(a, b):
+    while b:   
+        a, b = b, a % b   
+    return a
+def lcm(a, b):
+    return a * b // gcd(a, b)
+print("GCD:", gcd(12, 18))
+print("LCM:", lcm(12, 18))
+
+# 2. Second largest element (without sorted)
+nums = [10, 20, 4, 45, 99]
+first = second = float('-inf')
+for n in nums:
+    if n > first:   
+        second, first = first, n   
+    elif n > second and n != first:   
+        second = n
+print("Second largest:", second)
+
+# 3. Palindrome string (ignore case & spaces)
+s = "Never Odd Or Even"
+clean = s.replace(" ", "").lower()
+print("Palindrome" if clean == clean[::-1] else "Not Palindrome")
+
+# 4. Multiplication table up to N
+N = 5
+for i in range(1, N+1):
+    for j in range(1, 11):   
+        print(f"{i} x {j} = {i*j}")   
+    print()
+
+# 5. Recursive sum of digits
+def sum_digits(n):
+    if n == 0:   
+        return 0   
+    return n % 10 + sum_digits(n // 10)
+print(sum_digits(1234))  # 10
+
+
+# Strings
+
+# 1. All permutations of a string (without itertools)
+def permute(s, ans=""):
+    if len(s) == 0:   
+        print(ans)   
+        return   
+    for i in range(len(s)):   
+        permute(s[:i] + s[i+1:], ans + s[i])
+permute("ABC")
+
+# 2. Longest palindrome substring
+def longest_palindrome(s):
+    longest = ""   
+    for i in range(len(s)):   
+        for j in range(i, len(s)):   
+            temp = s[i:j+1]   
+            if temp == temp[::-1] and len(temp) > len(longest):   
+                longest = temp   
+    return longest
+print(longest_palindrome("babad"))
+
+# 3. Word frequency (ignore case)
+text = "This is a test this is only a Test"
+words = text.lower().split()
+freq = {}
+for w in words:
+    freq[w] = freq.get(w, 0) + 1
+print(freq)
+
+# 4. Anagram check (without Counter)
+s1, s2 = "listen", "silent"
+print("Anagram" if sorted(s1) == sorted(s2) else "Not Anagram")
+
+# 5. Remove duplicate characters (preserve order)
+s = "programming"
+result = ""
+for ch in s:
+    if ch not in result:   
+        result += ch
+print(result)
+
+
+# Lists
+
+# 1. Rotate list k times to the right without slicing
+lst = [1, 2, 3, 4, 5]
+k = 2
+for i in range(k):
+    last = lst.pop()   
+    lst.insert(0, last)
+print("Rotated list:", lst)
+
+# 2. Merge two sorted lists into one sorted list without sorted()
+a = [1, 3, 5, 7]
+b = [2, 4, 6, 8]
+result = []
+i = j = 0
+while i < len(a) and j < len(b):
+    if a[i] < b[j]:   
+        result.append(a[i])   
+        i += 1   
+    else:   
+        result.append(b[j])   
+        j += 1
+result.extend(a[i:])
+result.extend(b[j:])
+print("Merged sorted list:", result)
+
+# 3. Find longest increasing subsequence in a list
+lst = [10, 22, 9, 33, 21, 50, 41, 60]
+n = len(lst)
+dp = [1] * n
+for i in range(1, n):
+    for j in range(0, i):   
+        if lst[i] > lst[j]:   
+            dp[i] = max(dp[i], dp[j] + 1)
+print("Length of Longest Increasing Subsequence:", max(dp))
+
+# 4. Find all pairs in a list whose sum equals target
+lst = [1, 2, 3, 4, 5, 6]
+target = 7
+for i in range(len(lst)):
+    for j in range(i+1, len(lst)):   
+        if lst[i] + lst[j] == target:   
+            print("Pair:", (lst[i], lst[j]))
+
+# 5. Remove None and duplicates from a list
+lst = [1, 2, None, 3, 2, None, 4, 1, 5]
+lst = [x for x in lst if x is not None]
+result = []
+for x in lst:
+    if x not in result:   
+        result.append(x)
+print("Cleaned list:", result)
+
+
+# Tuples
+
+# 1. Swap two tuples without extra variables
+t1 = (1, 2, 3)
+t2 = (4, 5, 6)
+print("Before Swap:")
+print("t1 =", t1)
+print("t2 =", t2)
+t1, t2 = t2, t1
+print("After Swap:")
+print("t1 =", t1)
+print("t2 =", t2)
+
+# 2. Element-wise sum of two same-length tuples
+t1 = (1, 2, 3)
+t2 = (4, 5, 6)
+result = tuple(t1[i] + t2[i] for i in range(len(t1)))
+print("Element-wise sum:", result)
+
+# 3. Convert list of tuples into a dictionary
+lst = [(1, "one"), (2, "two"), (3, "three")]
+d = dict(lst)
+print("Dictionary:", d)
+
+# 4. Count repeated elements in a tuple
+t = (1, 2, 3, 2, 4, 1, 2, 5)
+counts = {}
+for item in t:
+    counts[item] = counts.get(item, 0) + 1
+print("Element counts:", counts)
+
+# 5. Swap min and max elements in a tuple
+t = (10, 20, 5, 30, 15)
+lst = list(t)   # convert tuple to list
+min_index = lst.index(min(lst))
+max_index = lst.index(max(lst))
+lst[min_index], lst[max_index] = lst[max_index], lst[min_index]
+t = tuple(lst)
+print("After swapping min and max:", t)
+
+
+# Sets
+
+# 1. Find elements in exactly two out of three sets
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+C = {4, 6, 7, 8}
+result = (A & B - C) | (A & C - B) | (B & C - A)
+print("Elements in exactly two sets:", result)
+
+# 2. Check if two sets are disjoint without isdisjoint()
+A = {1, 2, 3}
+B = {4, 5, 6}
+common = A & B   # intersection
+if len(common) == 0:
+    print("Sets are disjoint")
+else:
+    print("Sets are not disjoint")
+
+# 3. Find symmetric difference of two sets manually
+A = {1, 2, 3}
+B = {3, 4, 5}
+result = (A - B) | (B - A)
+print("Symmetric difference:", result)
+
+# 4. Create set of unique vowels in a string
+s = "Python Programming is Fun"
+vowels = "aeiouAEIOU"
+result = {ch for ch in s if ch in vowels}
+print("Unique vowels:", result)
+
+# 5. Generate set of prime factors of a number
+num = int(input("Enter a number: "))
+factors = set()
+i = 2
+temp = num
+while i <= temp:
+    if temp % i == 0:   
+        factors.add(i)   
+        temp = temp // i   
+    else:   
+        i = i + 1
+print("Prime factors:", factors)
+
+
+# Dictionary
+
+# 1. Character frequency
+s = "hello world"
+freq = {}
+for ch in s:
+    freq[ch] = freq.get(ch, 0) + 1
+print(freq)
+
+# 2. Merge two dictionaries (sum common keys)
+d1 = {"a":1, "b":2}
+d2 = {"b":3, "c":4}
+result = d1.copy()
+for k,v in d2.items():
+    result[k] = result.get(k,0) + v
+print(result)
+
+# 3. Invert dictionary
+d = {"a":1, "b":2}
+print({v:k for k,v in d.items()})
+
+# 4. Group words by first letter
+words = ["apple","banana","apricot","blueberry"]
+groups = {}
+for w in words:
+    groups.setdefault(w[0], []).append(w)
+print(groups)
+
+# 5. Key with highest value
+d = {"a":10, "b":50, "c":30}
+print(max(d, key=d.get))
